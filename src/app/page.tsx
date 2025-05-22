@@ -1,6 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import SignUpModal from "./components/SignUpModal";
 
 export default function Home() {
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f8f3ec] p-2">
       {/* 상단 */}
@@ -8,58 +14,40 @@ export default function Home() {
 
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[#e2d3bc] overflow-hidden">
+          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-[#e2d3bc] overflow-hidden">
             <Image
               src="/stiill_home_logo.png"
               alt="고요한 집 로고"
-              width={80}
-              height={80}
+              width={60}
+              height={60}
               priority
             />
           </div>
-          <h1 className="text-4xl font-bold text-[#5c4632] mb-2 tracking-wide">
+          <h1 className="text-xl font-bold text-[#5c4632] tracking-wide">
             고요한 집
           </h1>
         </div>
-        <div>
-          <button className="text-black px-6 py-2 text-base font-semibold cursor-pointer">
-            로그인
-          </button>
+        <div className="flex text-black text-sm gap-4 font-semibold">
+          <button className="">로그인</button>
+          <button onClick={() => setIsSignUpModalOpen(true)}>회원가입</button>
         </div>
       </div>
 
-      <div className="text-sm mx-8 text-[#5c4632]">
+      <div className="text-sm mx-8 text-[#5c4632] text-center my-3">
         <p className="">잠시 멈춰도 괜찮아요,</p>
-        <p className="mb-6">이곳은 누구도 다그치지 않는 집입니다.</p>
+        <p className="">이곳은 누구도 다그치지 않는 집입니다.</p>
       </div>
-      <div className="flex flex-col gap-3 w-full items-center mb-8">
+      {/* <div className="flex flex-col gap-3 w-full items-center mb-8">
         <button className="bg-[#7b9467] text-white rounded-full px-8 py-2 text-lg font-semibold shadow hover:bg-[#6a7f57] transition">
           커뮤니티 돌아가기
         </button>
         <button className="bg-[#c7a887] text-white rounded-full px-8 py-2 text-lg font-semibold shadow hover:bg-[#b08d6b] transition">
           오늘의 이야기 보기
         </button>
-      </div>
+      </div> */}
 
-      {/* 네 개의 메뉴 */}
-      <div className="flex flex-wrap justify-center gap-4 mb-10">
-        <div className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition">
-          <svg width="36" height="36" fill="none" className="mb-2">
-            <rect
-              x="7"
-              y="10"
-              width="22"
-              height="16"
-              rx="3"
-              stroke="#bfae8e"
-              strokeWidth="2"
-            />
-            <path d="M12 18h12M12 22h8" stroke="#bfae8e" strokeWidth="2" />
-          </svg>
-          <span className="text-[#5c4632] font-semibold text-lg mb-1">
-            오늘 하루 한줄
-          </span>
-        </div>
+      {/* 메뉴 */}
+      <div className="flex flex-wrap justify-center gap-4 mt-2">
         <div className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition">
           <svg width="36" height="36" fill="none" className="mb-2">
             <rect
@@ -103,7 +91,7 @@ export default function Home() {
       </div>
 
       {/* 공감받은 이야기 */}
-      <div className="max-w-xl mx-auto w-full mb-10">
+      {/* <div className="max-w-xl mx-auto w-full mb-10">
         <h2 className="text-xl font-bold text-[#5c4632] mb-4 flex items-center">
           <span className="mr-2">📌</span>지금 가장 많이 공감 받은 이야기
         </h2>
@@ -113,7 +101,7 @@ export default function Home() {
           </div>
           <div className="text-[#7b6a5e]">[익명] 3일 만에 햇볕을 좀 봤어요</div>
         </div>
-      </div>
+      </div> */}
 
       {/* 푸터 */}
       <footer className="bg-[#f3e6d2] py-8 text-center text-[#5c4632] text-lg mt-auto">
@@ -130,6 +118,11 @@ export default function Home() {
           </a>
         </div>
       </footer>
+
+      <SignUpModal
+        isOpen={isSignUpModalOpen}
+        onClose={() => setIsSignUpModalOpen(false)}
+      />
     </div>
   );
 }
