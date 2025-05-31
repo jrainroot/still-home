@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import SignUpModal from "./components/SignUpModal";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8f3ec] p-2">
+    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] p-2">
       {/* 상단 */}
       {/* <div className="flex flex-col items-center pt-12 pb-6"> */}
 
@@ -23,17 +25,17 @@ export default function Home() {
               priority
             />
           </div>
-          <h1 className="text-xl font-bold text-[#5c4632] tracking-wide">
-            고요한 집
-          </h1>
+          <h1 className="text-xl ml-2 font-bold tracking-wide">고요한 집</h1>
         </div>
-        <div className="flex text-black text-sm gap-4 font-semibold">
-          <button className="">로그인</button>
+        <div className="flex text-sm gap-4 font-semibold">
+          <button onClick={() => signIn("google")} className="">
+            로그인
+          </button>
           <button onClick={() => setIsSignUpModalOpen(true)}>회원가입</button>
         </div>
       </div>
 
-      <div className="text-sm mx-8 text-[#5c4632] text-center my-3">
+      <div className="text-sm mx-8 text-center my-3">
         <p className="">잠시 멈춰도 괜찮아요,</p>
         <p className="">이곳은 누구도 다그치지 않는 집입니다.</p>
       </div>
@@ -48,7 +50,10 @@ export default function Home() {
 
       {/* 메뉴 */}
       <div className="flex flex-wrap justify-center gap-4 mt-2">
-        <div className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition">
+        <Link
+          href="/free-board"
+          className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition"
+        >
           <svg width="36" height="36" fill="none" className="mb-2">
             <rect
               x="9"
@@ -62,9 +67,9 @@ export default function Home() {
             <rect x="13" y="17" width="10" height="4" rx="1" fill="#e2d3bc" />
           </svg>
           <span className="text-[#5c4632] font-semibold text-lg mb-1">
-            감정 창고
+            자유게시판
           </span>
-        </div>
+        </Link>
         <div className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition">
           <svg width="36" height="36" fill="none" className="mb-2">
             <circle cx="18" cy="18" r="8" stroke="#bfae8e" strokeWidth="2" />
@@ -104,7 +109,7 @@ export default function Home() {
       </div> */}
 
       {/* 푸터 */}
-      <footer className="bg-[#f3e6d2] py-8 text-center text-[#5c4632] text-lg mt-auto">
+      <footer className="bg-[var(--background)] py-8 text-center text-lg mt-auto">
         <div className="font-bold text-2xl mb-2">고요한 집</div>
         <div className="flex justify-center gap-6 text-base mt-2">
           <a href="#" className="hover:underline">

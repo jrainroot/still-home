@@ -33,7 +33,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-8 w-full max-w-md shadow-2xl">
+      <div className="bg-white rounded-xl p-8 w-full max-w-md">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[#5c4632]">회원가입</h2>
           <button
