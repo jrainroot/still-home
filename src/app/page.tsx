@@ -51,7 +51,7 @@ export default function Home() {
       {/* 메뉴 */}
       <div className="flex flex-wrap justify-center gap-4 mt-2">
         <Link
-          href="/free-board"
+          href="/posts"
           className="flex flex-col items-center bg-[#f6e7d8] rounded-xl p-6 w-44 shadow hover:shadow-lg transition"
         >
           <svg width="36" height="36" fill="none" className="mb-2">

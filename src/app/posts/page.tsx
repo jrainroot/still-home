@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // 게시글 타입 정의
 interface Post {
@@ -56,7 +57,17 @@ const dummyPosts: Post[] = [
   },
 ];
 
-export default function FreeBoard() {
+export default function Posts() {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8090/api/posts")
+      .then(res => res.json())
+      .then(data => setPosts(data));
+  }, []);
+
+  console.log(posts);
+
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
@@ -72,9 +83,9 @@ export default function FreeBoard() {
         </div>
 
         {/* 게시글 목록 */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="text-[#5c4632] bg-white rounded-xl shadow-lg overflow-hidden">
           {/* 게시글 헤더 */}
-          <div className="grid grid-cols-12 gap-4 p-4 bg-[#f6e7d8] text-[#5c4632] font-semibold">
+          <div className="grid grid-cols-12 gap-4 p-4 bg-[#f6e7d8] font-semibold">
             <div className="col-span-1 text-center">번호</div>
             <div className="col-span-6">제목</div>
             <div className="col-span-2 text-center">작성자</div>
