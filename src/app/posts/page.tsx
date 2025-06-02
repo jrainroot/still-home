@@ -8,7 +8,7 @@ interface Post {
   id: number;
   title: string;
   author: string;
-  date: string;
+  create_date: string;
   views: number;
   likes: number;
 }
@@ -19,7 +19,7 @@ const dummyPosts: Post[] = [
     id: 1,
     title: "오늘의 작은 기쁨을 나누고 싶어요",
     author: "평화로운하루",
-    date: "2024-03-20",
+    create_date: "2024-03-20",
     views: 128,
     likes: 15,
   },
@@ -27,7 +27,7 @@ const dummyPosts: Post[] = [
     id: 2,
     title: "새로운 취미를 시작했어요",
     author: "조용한바람",
-    date: "2024-03-19",
+    create_date: "2024-03-19",
     views: 95,
     likes: 12,
   },
@@ -35,7 +35,7 @@ const dummyPosts: Post[] = [
     id: 3,
     title: "오늘 아침 산책길에서 만난 고양이",
     author: "따뜻한햇살",
-    date: "2024-03-18",
+    create_date: "2024-03-18",
     views: 156,
     likes: 23,
   },
@@ -43,7 +43,7 @@ const dummyPosts: Post[] = [
     id: 4,
     title: "요즘 읽고 있는 책 추천해요",
     author: "책사랑",
-    date: "2024-03-17",
+    create_date: "2024-03-17",
     views: 203,
     likes: 31,
   },
@@ -51,7 +51,7 @@ const dummyPosts: Post[] = [
     id: 5,
     title: "오늘 만든 수제 쿠키 레시피 공유",
     author: "달콤한시간",
-    date: "2024-03-16",
+    create_date: "2024-03-16",
     views: 178,
     likes: 27,
   },
@@ -62,10 +62,10 @@ export default function Posts() {
 
   useEffect(() => {
     fetch("http://localhost:8090/api/posts")
-      .then(res => res.json())
-      .then(data => setPosts(data));
+      .then(result => result.json())
+      .then(jsonData => setPosts(jsonData.data.posts));
   }, []);
-
+  console.log("post");
   console.log(posts);
 
   return (
@@ -94,7 +94,7 @@ export default function Posts() {
           </div>
 
           {/* 게시글 목록 */}
-          {dummyPosts.map(post => (
+          {posts.map(post => (
             <div
               key={post.id}
               className="grid grid-cols-12 gap-4 p-4 border-b border-gray-100 hover:bg-gray-50 transition"
@@ -103,15 +103,18 @@ export default function Posts() {
                 {post.id}
               </div>
               <div className="col-span-6">
-                <span className="hover:text-[#7b9467] cursor-pointer">
+                <Link
+                  href={`/posts/${post.id}`}
+                  className="hover:text-[#7b9467]"
+                >
                   {post.title}
-                </span>
+                </Link>
               </div>
               <div className="col-span-2 text-center text-gray-600">
                 {post.author}
               </div>
               <div className="col-span-2 text-center text-gray-600">
-                {post.date}
+                {post.create_date}
               </div>
               <div className="col-span-1 text-center text-gray-600">
                 {post.views}
