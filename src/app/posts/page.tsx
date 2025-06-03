@@ -77,9 +77,12 @@ export default function Posts() {
             ← 홈으로 돌아가기
           </Link>
           <h1 className="text-2xl font-bold">자유게시판</h1>
-          <button className="bg-[#7b9467] px-4 py-2 rounded-full hover:bg-[#6a7f57] transition">
+          <Link
+            href="/posts/create"
+            className="bg-[#7b9467] px-4 py-2 rounded-full hover:bg-[#6a7f57] transition"
+          >
             글쓰기
-          </button>
+          </Link>
         </div>
 
         {/* 게시글 목록 */}

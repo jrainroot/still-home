@@ -2,22 +2,42 @@
 
 import Link from "next/link";
 import { Post } from "@/types/post";
-import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/date";
+import { useRouter } from "next/navigation";
 
-export default function PostDetail({ postId }: { postId: string }) {
-  const [post, setPost] = useState<Post | null>(null);
-  useEffect(() => {
-    fetch(`http://localhost:8090/api/posts/${postId}`)
-      .then(res => res.json())
-      .then(data => setPost(data.data.post));
-  }, [postId]);
+interface PostDetailProps {
+  post: Post;
+  postId: string;
+}
 
-  if (!post) {
-    return <div className="min-h-screen p-4">Loading...</div>;
-  }
+export default function PostDetail({ post, postId }: PostDetailProps) {
+  const router = useRouter();
 
-  console.log(post);
+  const handleDelete = async () => {
+    if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8090/api/posts/${postId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        alert("게시글이 삭제되었습니다.");
+        router.push("/posts");
+      } else {
+        alert("게시글 삭제에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      alert("게시글 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
@@ -54,10 +74,16 @@ export default function PostDetail({ postId }: { postId: string }) {
             <button className="px-4 py-2 rounded-full bg-[#222218] hover:bg-gray-200 transition">
               좋아요
             </button>
-            <button className="px-4 py-2 rounded-full bg-[#7b9467] hover:bg-[#6a7f57] transition">
+            <button
+              onClick={() => router.push(`/posts/${postId}/edit`)}
+              className="px-4 py-2 rounded-full bg-[#7b9467] hover:bg-[#6a7f57] transition"
+            >
               수정
             </button>
-            <button className="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 transition">
+            <button
+              onClick={handleDelete}
+              className="px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 transition"
+            >
               삭제
             </button>
           </div>

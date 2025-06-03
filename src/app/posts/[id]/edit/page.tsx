@@ -1,4 +1,4 @@
-import PostDetail from "./PostDetail";
+import PostEdit from "./PostEdit";
 
 async function getPost(id: string) {
   const response = await fetch(`http://localhost:8090/api/posts/${id}`, {
@@ -13,9 +13,13 @@ async function getPost(id: string) {
   return data.data.post;
 }
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function EditPostPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = await Promise.resolve(params);
   const post = await getPost(id);
 
-  return <PostDetail post={post} postId={id} />;
+  return <PostEdit post={post} postId={id} />;
 }
