@@ -6,12 +6,12 @@ import Link from "next/link";
 import { handleFormChange } from "@/utils/formUtils";
 import { Post } from "@/types/post";
 
-// interface PostEditProps {
-//   post: Post;
-//   postId: string;
-// }
+interface PostEditProps {
+  post: Post;
+  postId: string;
+}
 
-export default function PostEdit({ post, postId }) {
+export default function PostEdit({ post, postId }: PostEditProps) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: post.title,
