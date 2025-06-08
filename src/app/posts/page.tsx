@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDate } from "@/utils/date";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -7,55 +8,58 @@ import { useEffect, useState } from "react";
 interface Post {
   id: number;
   title: string;
-  author: string;
-  create_date: string;
+  author: {
+    id: number;
+    name: string;
+  };
+  createDate: string;
   views: number;
   likes: number;
 }
 
 // 더미 게시글 데이터
-const dummyPosts: Post[] = [
-  {
-    id: 1,
-    title: "오늘의 작은 기쁨을 나누고 싶어요",
-    author: "평화로운하루",
-    create_date: "2024-03-20",
-    views: 128,
-    likes: 15,
-  },
-  {
-    id: 2,
-    title: "새로운 취미를 시작했어요",
-    author: "조용한바람",
-    create_date: "2024-03-19",
-    views: 95,
-    likes: 12,
-  },
-  {
-    id: 3,
-    title: "오늘 아침 산책길에서 만난 고양이",
-    author: "따뜻한햇살",
-    create_date: "2024-03-18",
-    views: 156,
-    likes: 23,
-  },
-  {
-    id: 4,
-    title: "요즘 읽고 있는 책 추천해요",
-    author: "책사랑",
-    create_date: "2024-03-17",
-    views: 203,
-    likes: 31,
-  },
-  {
-    id: 5,
-    title: "오늘 만든 수제 쿠키 레시피 공유",
-    author: "달콤한시간",
-    create_date: "2024-03-16",
-    views: 178,
-    likes: 27,
-  },
-];
+// const dummyPosts: Post[] = [
+//   {
+//     id: 1,
+//     title: "오늘의 작은 기쁨을 나누고 싶어요",
+//     author: "평화로운하루",
+//     create_date: "2024-03-20",
+//     views: 128,
+//     likes: 15,
+//   },
+//   {
+//     id: 2,
+//     title: "새로운 취미를 시작했어요",
+//     author: "조용한바람",
+//     create_date: "2024-03-19",
+//     views: 95,
+//     likes: 12,
+//   },
+//   {
+//     id: 3,
+//     title: "오늘 아침 산책길에서 만난 고양이",
+//     author: "따뜻한햇살",
+//     create_date: "2024-03-18",
+//     views: 156,
+//     likes: 23,
+//   },
+//   {
+//     id: 4,
+//     title: "요즘 읽고 있는 책 추천해요",
+//     author: "책사랑",
+//     create_date: "2024-03-17",
+//     views: 203,
+//     likes: 31,
+//   },
+//   {
+//     id: 5,
+//     title: "오늘 만든 수제 쿠키 레시피 공유",
+//     author: "달콤한시간",
+//     create_date: "2024-03-16",
+//     views: 178,
+//     likes: 27,
+//   },
+// ];
 
 export default function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -114,10 +118,10 @@ export default function Posts() {
                 </Link>
               </div>
               <div className="col-span-2 text-center text-gray-600">
-                {post.author}
+                {post.author.name}
               </div>
               <div className="col-span-2 text-center text-gray-600">
-                {post.create_date}
+                {formatDate(post.createDate)}
               </div>
               <div className="col-span-1 text-center text-gray-600">
                 {post.views}

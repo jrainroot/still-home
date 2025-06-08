@@ -25,7 +25,7 @@ export default function PostEdit({ post, postId }: PostEditProps) {
       const response = await fetch(
         `http://localhost:8090/api/posts/${postId}`,
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
