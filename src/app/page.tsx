@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import SignUpModal from "./components/SignUpModal";
-import { signIn } from "next-auth/react";
+import LoginModal from "./components/LoginModal";
 import Link from "next/link";
 
 export default function Home() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] p-2">
@@ -28,7 +29,7 @@ export default function Home() {
           <h1 className="text-xl ml-2 font-bold tracking-wide">고요한 집</h1>
         </div>
         <div className="flex text-sm gap-4 font-semibold">
-          <button onClick={() => signIn("google")} className="">
+          <button onClick={() => setIsLoginModalOpen(true)} className="">
             로그인
           </button>
           <button onClick={() => setIsSignUpModalOpen(true)}>회원가입</button>
@@ -127,6 +128,10 @@ export default function Home() {
       <SignUpModal
         isOpen={isSignUpModalOpen}
         onClose={() => setIsSignUpModalOpen(false)}
+      />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
       />
     </div>
   );
