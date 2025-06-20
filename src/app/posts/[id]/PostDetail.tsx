@@ -55,7 +55,7 @@ export default function PostDetail({ post, postId }: PostDetailProps) {
             <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
             <div className="flex justify-between text-gray-600">
               <div className="flex gap-4">
-                <span>작성자: {post.author}</span>
+                <span>작성자: {post.author.name}</span>
                 <span>작성일: {formatDate(post.createDate)}</span>
               </div>
               <div className="flex gap-4">

@@ -16,6 +16,6 @@ async function getPost(id: string) {
 export default async function PostPage({ params }: { params: { id: string } }) {
   const { id } = await Promise.resolve(params);
   const post = await getPost(id);
-
+  console.log(post);
   return <PostDetail post={post} postId={id} />;
 }

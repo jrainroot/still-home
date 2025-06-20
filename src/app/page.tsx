@@ -9,6 +9,38 @@ import Link from "next/link";
 export default function Home() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [user, setUser] = useState<{ name: string } | null>(null);
+
+  // useEffect(() => {
+  //   // 페이지 로드 시 사용자 정보 확인
+  //   fetch("http://localhost:8090/api/members/me", {
+  //     credentials: "include",
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if (data.name) {
+  //         setUser(data);
+  //       }
+  //     })
+  //     .catch(error => console.error("Error fetching user:", error));
+  // }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:8090/api/members/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setUser(null);
+      } else {
+        alert("로그아웃 실패");
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] p-2">
@@ -28,11 +60,20 @@ export default function Home() {
           </div>
           <h1 className="text-xl ml-2 font-bold tracking-wide">고요한 집</h1>
         </div>
-        <div className="flex text-sm gap-4 font-semibold">
-          <button onClick={() => setIsLoginModalOpen(true)} className="">
-            로그인
-          </button>
-          <button onClick={() => setIsSignUpModalOpen(true)}>회원가입</button>
+        <div className="flex text-sm gap-4 font-semibold items-center">
+          {user ? (
+            <>
+              <span className="text-[#e2d3bc]">{user.name}님</span>
+              <button onClick={handleLogout}>로그아웃</button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setIsLoginModalOpen(true)}>로그인</button>
+              <button onClick={() => setIsSignUpModalOpen(true)}>
+                회원가입
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -132,6 +173,11 @@ export default function Home() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+        onLoginSuccess={userData => {
+          console.log(userData);
+          setUser(userData);
+          setIsLoginModalOpen(false);
+        }}
       />
     </div>
   );

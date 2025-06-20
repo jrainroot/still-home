@@ -6,9 +6,14 @@ import { signIn } from "next-auth/react";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onLoginSuccess: (userData: { name: string }) => void;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export default function LoginModal({
+  isOpen,
+  onClose,
+  onLoginSuccess,
+}: LoginModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -31,7 +36,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       });
 
       if (response.ok) {
-        alert("로그인 성공");
+        const userData = await response.json();
+        onLoginSuccess(userData.data.memberDto);
       } else {
         alert("로그인 실패");
       }
